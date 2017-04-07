@@ -1,11 +1,42 @@
-Documentum REST Services .Net Client Samples
+Documentum REST .Net Client Reference Implementation
 ===================
 
 [![License: Apache 2](https://img.shields.io/badge/license-Apache%202.0-brightgreen.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 
 This .Net solution contains a reference implementation of Documentum REST Services clients and tests written in C# code. The purpose of this solution is to demonstrate one way to develop a hypermedia driven REST client to consume Documentum REST Services. It does NOT indicate that users could not develop a REST client using other technologies.
 
-EMC shares the source code of this project for the technology sharing. If users plan to migrate the sample code to their products, they are responsible to maintain this part of the code in their products and should agree with license polices of the referenced libraries used by this sample project.
+OpenText shares the source code of this project for the technology sharing. If users plan to migrate the sample code to their products, they are responsible to maintain this part of the code in their products and should agree with license polices of the referenced libraries used by this sample project.
+
+### Overview
+
+This Documentum REST Services client is written with C# code. It uses the `JSON` media type. It supports HTTP Basic authentication and optionally supports Kerberos. The .Net client's supported features are listed in below tables.
+
+API Spec | Description 
+:--- | :---
+Supported Servers | ![REST API Version](https://img.shields.io/badge/rest--api-7.2-brightgreen.png), ![REST API Version](https://img.shields.io/badge/rest--api-7.3-brightgreen.png)
+Supported Formats | <ul><li>JSON</li></ul>
+Supported Authentications | <ul><li>Basic</li><li>Kerberos</li></ul>
+Call Mode| <ul><li>Asynchronous</li></ul>
+
+Service Spec | Description 
+:--- | :---
+Fundamental Services | <ul><li>Home document</li><li>Product information</li><li>Repositories</li><li>Batch execution</li></ul>
+Folder Services | <ul><li>Folder CRUD</li><li>Folder navigation</li><li>Copy, move, link, unlink</li></ul>
+Document / Sysobject Services | <ul><li>Document CRUD</li><li>Checkout, cancel checkout, checkin</li><li>Copy, move, link, unlink</li><li>List checked out objects</li></ul>
+Content Services | <ul><li>Import contents</li><li>Export contents</li></ul>
+Query and search Services | <ul><li>DQL read-only query</li><li>Full-text search</li></ul>
+User and group Services | <ul><li>User CRUD</li><li>Group CRUD</li><li>Group members</li><li>Group parent groups</li><li>User parent groups</li></ul>
+Relation Services | <ul><li>Create relations</li><li>List relations</li></ul>
+Format Services | <ul><li>List formats</li></ul>
+Network location Services | <ul><li>List network locations</li></ul>
+Type services | <ul><li>List types</li><li>List relation types</li></ul>
+
+
+> _**CRUD**_ - *Create, Retrieve, Update, Delete*
+
+
+
+### Project Structure
 
 The solution contains four projects.
 
@@ -14,35 +45,11 @@ The solution contains four projects.
 - **AspNetWebFormsRestConsumer**
 - **DroidMamarinTest**
 
-The client samples have been verified against Documentum REST Services 7.2. For more information, please visit [Documentum REST space in EMC Community Network](https://community.emc.com/docs/DOC-32266).
+The client samples have been verified against Documentum REST Services 7.2 and 7.3. For more information, please visit [Documentum REST space in EMC Community Network](https://community.emc.com/docs/DOC-32266).
 
 ### RestClient
 
-This project implements a REST client as a DLL library. It implements all services in Documentum REST 7.2 . It uses the JSON media type. It supports HTTP Basic authentication and optionally supports Kerberos.
-
-Here is the code to start a Documentum REST services from **Home Document**.
-```C#
-RestController client = new RestController(username, password);
-HomeDocument home = client.Get<HomeDocument>(RestHomeUri, null);
-Feed<Repository> repositories = home.GetRepositories<Repository>(new FeedGetOptions { Inline = true, Links = true });
-```
-
-When you get a response from a resource, you get a `state` of that resource on the client side as well. Then you can perform further operations on that resource according to its available methods. For instance,
-```C#
-public Document ImportDocumentAsNewVersion(Document doc, Stream contentStream, String mimeType, GenericOptions checkinOptions)
-{
-    // If the document is not already checked out, check it out.
-    if (!doc.IsCheckedOut())
-    {
-        doc = doc.Checkout();
-    }
-    Document checkinDoc = NewDocument(doc.GetPropertyString("object_name"));
-    checkinOptions.SetQuery("format", doc.GetPropertyString("a_content_type"));
-    checkinOptions.SetQuery("page", 0);
-    checkinOptions.SetQuery("primary", true);
-    return doc.CheckinMinor(checkinDoc, contentStream, mimeType, checkinOptions);
-}
-```
+This project implements a REST client as a DLL library. It implements all services in Documentum REST 7.2 and partially 7.3. It uses the JSON media type. It supports HTTP Basic authentication and optionally supports Kerberos.
 
 
 ### Tester 
@@ -62,6 +69,36 @@ This project is an asp.net web forms sample to consume the REST services.
 ### DroidXamarinTest 
 
 This project uses [Xamarin](http://xamarin.com/) to show how the DocumentumRestClient dll can be used on mobile platforms. To use this project, you must use `Xamarin Studio` or have `Xamarin for Visual Studio` installed. It is definitely nothing fancy, just a basic concept of list cabinets, navigate folders, nothing more.
+
+
+### Use the API
+
+Here is the code to start a Documentum REST services from **Home Document**.
+```C#
+// new a simple rest client instance
+RestController client = new RestController(username, password);
+// get home document
+HomeDocument home = client.Get<HomeDocument>(RestHomeUri, null);
+// get repositories feed
+Feed<Repository> repositories = home.GetRepositories<Repository>(new FeedGetOptions { Inline = true, Links = true });
+```
+
+When you get a response from a resource, you get a `state` of that resource on the client side as well. Then you can perform further operations on that resource according to its available methods. For instance,
+```C#
+public Document ImportDocumentAsNewVersion(Document doc, Stream contentStream, String mimeType, GenericOptions checkinOptions)
+{
+    // If the document is not already checked out, check it out.
+    if (!doc.IsCheckedOut())
+    {
+        doc = doc.Checkout();
+    }
+    Document checkinDoc = NewDocument(doc.GetPropertyString("object_name"));
+    checkinOptions.SetQuery("format", doc.GetPropertyString("a_content_type"));
+    checkinOptions.SetQuery("page", 0);
+    checkinOptions.SetQuery("primary", true);
+    return doc.CheckinMinor(checkinDoc, contentStream, mimeType, checkinOptions);
+}
+```
 
 
 ### QuickStart

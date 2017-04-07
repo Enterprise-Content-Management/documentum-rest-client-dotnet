@@ -79,6 +79,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tests\BatchTest.cs" />
     <Compile Include="Tests\FormatTest.cs" />
+    <Compile Include="Tests\GroupTest.cs" />
     <Compile Include="Tests\TypeTest.cs" />
     <Compile Include="Tests\SearchTest.cs" />
     <Compile Include="Tests\DqlQueryTest.cs" />
@@ -89,6 +90,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Tests\UseCaseTestsD2.cs" />
     <Compile Include="Tests\UseCaseTests.cs" />
+    <Compile Include="Tests\UserTest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
