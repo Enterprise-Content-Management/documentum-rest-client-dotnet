@@ -91,6 +91,12 @@ namespace Emc.Documentum.Rest.Test
                             string groupName = cmd.ReadToEnd();
                             GroupTest.Run(client, RestHomeUri, filter, itemsPerPage, pause, repositoryName, printResult, groupName);
                             break;
+                        case "group-member":                           
+                            string testGroup = cmd.Next();
+                            string testSubGroup = cmd.Next();
+                            string testUser = cmd.ReadToEnd();
+                            GroupMemberTest.Run(client, RestHomeUri, repositoryName, printResult, testGroup,testSubGroup,testUser);
+                            break;
                         case "batch":
                             BatchTest.Run(client, RestHomeUri, repositoryName);
                             break;
@@ -261,6 +267,13 @@ namespace Emc.Documentum.Rest.Test
                           + "\n\t\t    <groupName>  - Specify the value of group_name that you want to create with or retrieve"
                           + "\n\t\t-  Example:"
                           + "\n\t\t   group 10 true starts-with(group_name,'ne') net_sample_test_group");
+            Console.WriteLine("\tgroup-member [<parentGroupName> <subGroupName> <userName>]"
+                         + "\n\t\t- Add user/sub-group to parent group, remove user/sub-group from the parent group. "
+                         + "\n\t\t    <parentGroupName>  - Specify the value of group_name that you want to add user/sub-group to and remove user/sub-group from"
+                         + "\n\t\t    <subGroupName>     - Specify the value of group_name that you want to be added to or removed from the parent group"
+                         + "\n\t\t    <userName>  - Specify the value of user_name that you want to be added to or removed from the parent group"                       
+                         + "\n\t\t-  Example:"
+                         + "\n\t\t   group-member net_sample_test_group net_sample_test_sub_group net_sample_test_user");            
             Console.WriteLine("\tcls \n\t\t- Clear the console");
             Console.WriteLine("\texit \n\t\t- Exit the Test");
             Console.Write("\r\n\nCommand > ");

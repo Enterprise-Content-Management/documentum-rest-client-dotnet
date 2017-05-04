@@ -91,5 +91,32 @@ namespace Emc.Documentum.Rest.DataModel
         {
             Client.Delete(LinkRelations.FindLinkAsString(GetFullLinks(), LinkRelations.DELETE.Rel));
         }
+
+
+        /// <summary>
+        /// Add an existing user into this group as a user member
+        /// </summary>       
+        /// <param name="userHref">The specified user resource uri. This variable is mandatory.</param>
+        /// <returns></returns>
+        public void AddUserToGroup(User userHref)
+        {           
+            Client.Post(
+                GetFullLinks(),
+                LinkRelations.USERS.Rel,
+                userHref,null);
+        }
+
+        /// <summary>
+        /// Add an existing group into this group as a sub-group member
+        /// </summary>       
+        /// <param name="groupHref">The specified group resource uri. This variable is mandatory.</param>
+        /// <returns></returns>
+        public void AddSubGroup(Group groupHref)
+        {
+            Client.Post(
+                GetFullLinks(),
+                LinkRelations.GROUPS.Rel,
+                groupHref, null);
+        }
     }
 }

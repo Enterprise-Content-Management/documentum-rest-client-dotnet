@@ -12,7 +12,7 @@
     <ApplicationIcon>PerfCenterCpl.ico</ApplicationIcon>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <Description>A console appliation that runs through use cases, can perform some level of loading for a repository as well. The source code provides good examples of working with the .NET DCTM-ReST framework.</Description>
-    <TargetFrameworkProfile />
+    <TargetFrameworkProfile />   
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>
@@ -55,7 +55,7 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
-  </PropertyGroup>
+  </PropertyGroup>  
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data.Linq" />
@@ -79,6 +79,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tests\BatchTest.cs" />
     <Compile Include="Tests\FormatTest.cs" />
+    <Compile Include="Tests\GroupMemberTest.cs" />
     <Compile Include="Tests\GroupTest.cs" />
     <Compile Include="Tests\TypeTest.cs" />
     <Compile Include="Tests\SearchTest.cs" />
@@ -99,12 +100,12 @@
     </None>
     <None Include="Logger.resx" />
     <None Include="PerfCenterCpl.ico" />
-    <None Include="reportXSL.xsl" />
+    <None Include="reportXSL.xsl" />   
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RestClient\RestClient.csproj">
       <Project>{fc3f7008-d477-49ed-bea8-b775541127e5}</Project>
       <Name>RestClient</Name>
     </ProjectReference>
-  </ItemGroup>
+  </ItemGroup> 
 </Project>

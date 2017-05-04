@@ -25,7 +25,7 @@ Folder Services | <ul><li>Folder CRUD</li><li>Folder navigation</li><li>Copy, mo
 Document / Sysobject Services | <ul><li>Document CRUD</li><li>Checkout, cancel checkout, checkin</li><li>Copy, move, link, unlink</li><li>List checked out objects</li></ul>
 Content Services | <ul><li>Import contents</li><li>Export contents</li></ul>
 Query and search Services | <ul><li>DQL read-only query</li><li>Full-text search</li></ul>
-User and group Services | <ul><li>User CRUD</li><li>Group CRUD</li><li>Group members</li><li>Group parent groups</li><li>User parent groups</li></ul>
+User and group Services | <ul><li>User CRUD</li><li>Group CRUD</li><li>Group members</li><li>Group parent groups</li><li>User parent groups</li><li>Add user/group to a group</li><li>Remove user/group from a group</li></ul>
 Relation Services | <ul><li>Create relations</li><li>List relations</li></ul>
 Format Services | <ul><li>List formats</li></ul>
 Network location Services | <ul><li>List network locations</li></ul>

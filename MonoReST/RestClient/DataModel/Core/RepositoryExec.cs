@@ -94,6 +94,15 @@ namespace Emc.Documentum.Rest.DataModel
         }
 
         /// <summary>
+        /// Remove the relation between group and it's user or group member
+        /// </summary>      
+        /// <param name="groupRelationUri">The relation resource uri between the group and its member</param>        
+        public void RemoveRelationBetweenGroupAndMember(string groupRelationUri)
+        {
+            Client.Delete(groupRelationUri);
+        }
+
+        /// <summary>
         /// Get formats in this repository
         /// </summary>
         /// <typeparam name="T"></typeparam>
