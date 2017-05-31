@@ -213,9 +213,8 @@ namespace Emc.Documentum.Rest.DataModel
             double pageCount = 0;
 
             if (options == null) options = new FeedGetOptions();
-            string dqlUri = LinkRelations.FindLinkAsString(this.Links, LinkRelations.DQL.Rel);
-            string dqlUriWithoutTemplateParams = dqlUri.Substring(0, dqlUri.IndexOf("{"));
-
+            string dqlUriWithoutTemplateParams = LinkRelations.FindLinkAsString(this.Links, LinkRelations.DQL.Rel);
+      
             /******************** BEGIN GET TOTAL IF SPECIFIED *****************************/
             if (options != null && options.IncludeTotal)
             {
