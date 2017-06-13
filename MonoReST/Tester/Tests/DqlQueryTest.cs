@@ -1,11 +1,7 @@
 ﻿using Emc.Documentum.Rest.DataModel;
 using Emc.Documentum.Rest.Net;
-using Emc.Documentum.Rest.Http.Utility;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Emc.Documentum.Rest.Test
 {
@@ -17,23 +13,23 @@ namespace Emc.Documentum.Rest.Test
             Feed<Repository> repositories = home.GetRepositories<Repository>(new FeedGetOptions { Inline = true, Links = true });
             Repository repository = repositories.FindInlineEntry(repositoryName);
 
-            Console.WriteLine(String.Format("Running DQL query '{0}' on repository '{1}', with page size {2}", query, repository.Name, itemsPerPage));
+            Console.WriteLine(string.Format("Running DQL query '{0}' on repository '{1}', with page size {2}", query, repository.Name, itemsPerPage));
             
             // REST call to get the 1st page of the dql query
-            Feed<PersistentObject> queryResult = repository.ExecuteDQL<PersistentObject>(query, new FeedGetOptions() { ItemsPerPage = itemsPerPage, IncludeTotal = true});
+            Feed<PersistentObject> queryResult = repository.ExecuteDQL<PersistentObject>(query, new FeedGetOptions() { ItemsPerPage = itemsPerPage});
             if (queryResult != null)
             {
                 int totalResults = queryResult.Total;
                 double totalPages = queryResult.PageCount;
                 int docProcessed = 0;
                 //int pageCount = queryResult.Entries.c
-                for (int i = 0; i < totalPages; i++)
+                for (int i = 0; i < totalPages && queryResult!=null; i++)
                 {
                     Console.WriteLine("**************************** PAGE " + (i + 1) + " *******************************");
                     foreach (Entry<PersistentObject> obj in queryResult.Entries)
                     {
                         StringBuilder values = new StringBuilder();
-                        Console.WriteLine(String.Format("  ID: {0} \t\tName: {1}",
+                        Console.WriteLine(string.Format("  ID: {0} \t\tName: {1}",
                         GetAttr(obj.Content, new string[] {"r_object_id"}),
                         GetAttr(obj.Content, new string[] {"object_name", "user_name", "group_name", "name"})));
                         Console.WriteLine(values.ToString());
