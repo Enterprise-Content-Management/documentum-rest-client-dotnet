@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Emc.Documentum.Rest.Net;
+using System.Collections.Generic;
+
 namespace Emc.Documentum.Rest.DataModel
 {
     public enum DuplicateType
@@ -18,36 +14,53 @@ namespace Emc.Documentum.Rest.DataModel
         /// </summary>
         SYSTEM,
     }
-   /// <summary>
-   /// Email Package entry
-   /// </summary>
+
+    /// <summary>
+    /// Email Package entry
+    /// </summary>
     public class EmailPackage
     {
-        private bool duplicate = false;
+        #region Constructors
+
+        //TODO: Add param descriptions for IntelliSense
         /// <summary>
-        /// Does the email exist already in the system
+        /// Email Package entry constructor
         /// </summary>
         /// <param name="doc"></param>
         /// <param name="isDuplicate"></param>
-        public bool IsDuplicate
-        {
-            get { return duplicate; }
-            set { duplicate = value; }
-        }
-
-
-        /// <summary>
-        /// If the email is a duplicate, was in found in the same FOLDER
-        /// or somewhere else in the SYSTEM
-        /// </summary>
-        public DuplicateType DuplicateType { get; set; }
-
         public EmailPackage(Document doc, bool isDuplicate)
         {
             Email = doc;
             Attachments = new List<Document>();
-            duplicate = isDuplicate;
+            _duplicate = isDuplicate;
         }
+
+        #endregion
+
+        #region Properties
+
+        private bool _duplicate = false;
+        /// <summary>
+        /// Returns whether the email already exists in the system
+        /// </summary>
+        public bool IsDuplicate
+        {
+            get { return _duplicate; }
+            set { _duplicate = value; }
+        }
+
+        /// <remarks>
+        /// If the email is a duplicate, was found in the same FOLDER or somewhere else in the SYSTEM
+        /// </remarks>
+        public DuplicateType DuplicateType { get; set; }
+
+        public Document Email { get; set; }
+
+        public List<Document> Attachments { get; set; }
+
+        #endregion               
+
+        #region Methods
 
         public override string ToString()
         {
@@ -55,7 +68,6 @@ namespace Emc.Documentum.Rest.DataModel
             return serializer.Serialize(this);
         }
 
-        public Document Email { get; set; }
-        public List<Document> Attachments { get; set; }
+        #endregion
     }
 }
